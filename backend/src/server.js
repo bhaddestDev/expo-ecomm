@@ -29,8 +29,14 @@ app.listen(ENV.PORT, () => {
 
 const startServer = async () => {
   await connectDB();
-  app.listen(ENV.PORT, () => {
-    console.log('Server is up and running');
-  });
+  try {
+    await connectDB();
+    app.listen(ENV.PORT, () => {
+      console.log('Server is up and running');
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error.message);
+    process.exit(1);
+  }
 };
 startServer();
